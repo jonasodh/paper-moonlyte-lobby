@@ -1,0 +1,3 @@
+playerJoinedFirstTimeMessage: '&7[&a+&7] &e[player] Has joined for the first time :)'
+playerJoinMessage: '&a+ &e[player]'
+playerQuitMessage: '&c- &e[player]'
