@@ -1,0 +1,7 @@
+name: MoonlyteLobby
+version: '${project.version}'
+main: moonlyte.moonlyte.MoonlyteLobby
+api-version: 1.18
+authors: [ Jonas ]
+description: Moonlyte lobby plugin
+website: moonlyte.io
