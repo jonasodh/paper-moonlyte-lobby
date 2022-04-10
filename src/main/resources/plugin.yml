@@ -5,3 +5,7 @@ api-version: 1.18
 authors: [ Jonas ]
 description: Moonlyte lobby plugin
 website: moonlyte.io
+commands:
+  serverSelector:
+    description: Select a gamemode
+    usage: /<command>

@@ -1,7 +1,10 @@
 package moonlyte.moonlyte;
 
+import moonlyte.moonlyte.commands.ServerSelector;
+import moonlyte.moonlyte.events.PlayerDie;
 import moonlyte.moonlyte.events.PlayerJoin;
 import moonlyte.moonlyte.events.PlayerLeave;
+import moonlyte.moonlyte.events.ServerSelectorInteract;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +24,11 @@ private static MoonlyteLobby plugin;
         //register Events
         pm.registerEvents(new PlayerJoin(), this);
         pm.registerEvents(new PlayerLeave(), this);
+        pm.registerEvents(new ServerSelectorInteract(), this);
+        pm.registerEvents(new PlayerDie(), this);
+
+        //register commands
+        getCommand("serverSelector").setExecutor(new ServerSelector());
     }
 
     @Override
