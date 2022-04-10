@@ -1,5 +1,8 @@
 package moonlyte.moonlyte.events;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+import moonlyte.moonlyte.MoonlyteLobby;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.Objects;
 
 public class ServerSelectorInteract implements Listener {
+    MoonlyteLobby plugin = MoonlyteLobby.getPlugin();
     @EventHandler
     public void playerServerSelectorInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -30,17 +34,21 @@ public class ServerSelectorInteract implements Listener {
         //cancel ability to move items in inventory
         if (event.getView().getTitle().equalsIgnoreCase(ChatColor.RED + "Choose a gamemode")){
             event.setCancelled(true);
-
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
             switch (event.getCurrentItem().getType()){
                 case COMPASS:
                     player.closeInventory();
                     player.sendMessage("Teleporting to Lobby");
-                    Bukkit.dispatchCommand(player, "server lobby");
+                    out.writeUTF("Connect");
+                    out.writeUTF("lobby");  //server's name, set in the  velocity config
+                    player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
                     break;
                 case OAK_SAPLING:
                     player.closeInventory();
                     player.sendMessage("Teleporting to Survival");
-                    player.chat("/server survival");
+                    out.writeUTF("Connect");
+                    out.writeUTF("survival");
+                    player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
                     break;
             }
         }
