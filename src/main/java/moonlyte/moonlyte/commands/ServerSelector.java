@@ -20,7 +20,7 @@ public class ServerSelector implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            Inventory serverSelector = Bukkit.createInventory(player, 45, ChatColor.RED + "Choose a gamemode");
+            Inventory serverSelector = Bukkit.createInventory(player, 45, "Choose a gamemode");
 
             ItemStack lobby = new ItemStack(Material.COMPASS);
             ItemMeta lobbyMeta = lobby.getItemMeta();
@@ -33,11 +33,17 @@ public class ServerSelector implements CommandExecutor {
             lobby.setItemMeta(lobbyMeta);
 
             ItemStack survival = new ItemStack(Material.OAK_SAPLING);
+            ItemMeta survivalMeta = survival.getItemMeta();
+            if (survivalMeta != null) {
+                survivalMeta.setDisplayName("Survival");
+            }
 
-
-            ItemStack[] serverOptions = {lobby, survival};
-            serverSelector.setContents(serverOptions);
+//            ItemStack[] serverOptions = {lobby, survival};
+//            serverSelector.setContents(serverOptions);
+            serverSelector.setItem(21, lobby);
+            serverSelector.setItem(23, survival);
             player.openInventory(serverSelector);
+
         }
         return true;
     }
