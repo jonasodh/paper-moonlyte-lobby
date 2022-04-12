@@ -34,6 +34,12 @@ public class PlayerJoin implements Listener {
         compassMeta.setLore(compassLore);
         compass.setItemMeta(compassMeta);
         ItemStack[] giveSelectedItems = {compass};
-        e.getPlayer().getInventory().setContents(giveSelectedItems);
+
+        if (e.getPlayer().getInventory().contains(compass)){
+            e.getPlayer().getInventory().remove(compass);
+            e.getPlayer().getInventory().setItem(4, compass);
+        } else {
+            e.getPlayer().getInventory().setItem(4, compass);
+        }
     }
 }
