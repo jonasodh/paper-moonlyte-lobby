@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import moonlyte.moonlyte.MoonlyteLobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,6 +32,7 @@ public class ServerSelectorInteract implements Listener {
     @EventHandler
     public void selectMenuOption(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        ConfigurationSection items = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("lobby_menu"));
         //cancel ability to move items in inventory
         if (event.getView().getTitle().equalsIgnoreCase("Choose a gamemode")) {
             event.setCancelled(true);
@@ -38,21 +40,17 @@ public class ServerSelectorInteract implements Listener {
             if (event.getCurrentItem() == null) {
                 return;
             } else {
-                switch (event.getCurrentItem().getType()) {
-                    case COMPASS:
+                for (String item : items.getKeys(false)) {
+                    String itemName = (String) Objects.requireNonNull(plugin.getConfig().getConfigurationSection("lobby_menu." + item)).get("name");
+                    String serverName = (String) Objects.requireNonNull(plugin.getConfig().getConfigurationSection("lobby_menu." + item)).get("server_name");
+                    if (Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName().equals(itemName)) {
                         player.closeInventory();
-                        player.sendMessage("Teleporting to Lobby");
-                        out.writeUTF("Connect");
-                        out.writeUTF("lobby");  //server's name, set in the  velocity config
+                        if (serverName != null) {
+                            out.writeUTF("Connect");
+                            out.writeUTF(serverName);  //server's name, set in the  velocity config
+                        }
                         player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
-                        break;
-                    case OAK_SAPLING:
-                        player.closeInventory();
-                        player.sendMessage("Teleporting to Survival");
-                        out.writeUTF("Connect");
-                        out.writeUTF("survival");
-                        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
-                        break;
+                    }
                 }
             }
         }

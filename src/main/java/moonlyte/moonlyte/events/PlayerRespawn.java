@@ -32,8 +32,4 @@ public class PlayerRespawn implements Listener {
         player.getPlayer().getInventory().setContents(giveSelectedItems);
     }
 
-
-
-
-
 }

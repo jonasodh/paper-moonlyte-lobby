@@ -1,3 +1,16 @@
 playerJoinedFirstTimeMessage: '&7[&a+&7] &e[player] Has joined for the first time :)'
 playerJoinMessage: '&a+ &e[player]'
 playerQuitMessage: '&c- &e[player]'
+lobby_menu:
+  slot_1:
+    name: 'Lobby'
+    lore: 'Teleport to lobby'
+    material: 'COMPASS'
+    inventory_index: 21
+    server_name: 'lobby'
+  slot_2:
+    name: 'Survival'
+    lore: ''
+    material: 'OAK_SAPLING'
+    inventory_index: 23
+    server_name: 'survival'
